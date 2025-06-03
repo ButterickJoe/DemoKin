@@ -1,5 +1,4 @@
 
-
 #' Estimate kin counts by age, stage, and sex, in a time variant framework
 
 #' @description Implementation of combined formal demographic models: Caswell II,III,IV.
