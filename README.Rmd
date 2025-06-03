@@ -1,0 +1,132 @@
+---
+output: github_document
+---
+
+<!-- bibliography: vignettes\\references.bib -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+pkgload::load_all()
+library(knitr)
+```
+
+# DemoKin 
+
+::: {.columns}
+::: {.column width="30%"}
+
+<img src="man/figures/DemoKin-Logo.png" style="width:100px;" />
+
+:::
+::: {.column width="70%"}
+
+This is an R package for the demographic analysis of kinship networks using matrix-based models.  
+It implements methods developed initially by [Caswell (2019)](https://www.demographic-research.org/articles/volume/41/24), and continued in successive papers (like [Caswell (2020)](https://www.demographic-research.org/articles/volume/42/38) or [Caswell (2024)](https://www.demographic-research.org/articles/volume/49/41)) for estimating the number and age distribution of relatives under various demographic assumptions.
+
+:::
+:::
+
+## Features
+
+- Estimate kin counts and age distributions for various types of relatives
+- Support for one-sex and two-sex models
+- Time-invariant and time-varying approaches
+- Multi-state models incorporating additional variables like parity or education
+- Visualization tools for kinship networks
+
+## Installation
+
+You can install the development version of DemoKin from GitHub:
+
+```{r, eval = F}
+# install.packages("remotes")
+remotes::install_github("IvanWilli/DemoKin")
+library(DemoKin)
+```
+
+## Usage
+
+Here's a basic example of how to use DemoKin:
+
+```{r, eval = F}
+
+# Run a one-sex time-invariant kinship model using Swedish data from 2015
+kin_results <- kin(
+  p = swe_px[,"2015"],        # Survival probabilities
+  f = swe_asfr[,"2015"],      # Fertility rates
+  time_invariant = TRUE       # Use time-invariant model
+)
+
+# Visualize the expected number of living relatives by age
+kin_results$kin_summary %>%
+  rename_kin() %>%
+  ggplot2::ggplot(ggplot2::aes(age_focal, count_living)) +
+  ggplot2::geom_line() +
+  ggplot2::facet_wrap(~kin_label, scales = "free_y") +
+  ggplot2::labs(
+    title = "Expected number of living relatives by age",
+    x = "Age of focal individual",
+    y = "Number of relatives"
+  )
+```
+
+## Documentation
+
+For detailed documentation, please visit the [DemoKin website](https://ivanwilli.github.io/DemoKin/).
+
+The site includes several vignettes demonstrating different types of kinship models:
+
+### Models stratified by age
+- [One-sex time-invariant kinship model](https://ivanwilli.github.io/DemoKin/articles/1_1_OneSex_TimeInvariant_Age.html)
+- [One-sex time-varying kinship model](https://ivanwilli.github.io/DemoKin/articles/1_2_OneSex_TimeVarying_Age.html)
+- [Two-sex time-invariant kinship model](https://ivanwilli.github.io/DemoKin/articles/1_3_TwoSex_TimeInvariant_Age.html)
+- [Two-sex time-varying kinship model](https://ivanwilli.github.io/DemoKin/articles/1_4_TwoSex_TimeVarying_Age.html)
+
+### Models stratified by age and stage
+- [One-sex time-invariant multi-state model](https://ivanwilli.github.io/DemoKin/articles/2_1_OneSex_TimeInvariant_AgeStage.html)
+- [Two-sex time-varying multi-state model](https://ivanwilli.github.io/DemoKin/articles/2_2_TwoSex_TimeVarying_AgeStage.html)
+
+## Contributors
+
+`DemoKin` has benefited from the work of many people over the years, including:
+
+- **Ivan Williams** (University of Buenos Aires) leads the technical development of `DemoKin` with a particular focus on the implementation of the functions in R.
+
+- **Diego Alburez-Gutierrez** (Max Planck Institute for Demographic Research) coordinates the development of the package.
+
+- **Hal Caswell** (University of Amsterdam) provided crucial MATLAB code for computing matrix kinship models.
+
+- **Xi Song** (University of Pennsylvania) contributed the code to estimate time variant kinship models.
+
+- **Benjamin Schlüter** (University of Toronto) contributed code to implement bereavement analysis by cause of death.
+
+- **Joe Butterick** (University of Southampton) contributed code to implement time-variant, two-sex  multistate kinship models.
+
+- **Jason Hilton** (University of Southampton) contributed code to implement time-variant, two-sex multistate kinship models.
+
+- **Sha Jiang** (Max Planck Institute for Demographic Research) helped create and organise the documention for the package, including developing the package’s website.
+
+- **Amanda Martins** (Max Planck Institute for Demographic Research) developed materials for teaching DemoKin, including a course at the [European Doctoral School of Demography]( https://amandamartinsal.github.io/EDSD_kinship_24-25/).
+
+## Citation
+
+Williams, Iván; Alburez-Gutierrez, Diego; and the DemoKin team. (2021) DemoKin: An R package to implement demographic matrix kinship models. URL: https://github.com/IvanWilli/DemoKin.
+
+## Acknowledgments
+
+We thank Silvia Leek from the Max Planck Institute for Demographic Research for designing the DemoKin logo. The logo includes elements that have been taken or adapted [from this file](https://commons.wikimedia.org/wiki/File:Escudo_de_la_Orden_de_San_Jer%C3%B3nimo.svg), originally by Ansunando, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) via Wikimedia Commons. Sha Jiang provided useful comments for improving the package.
+
+## Get involved!
+  
+`DemoKin` is under constant development.
+If you're interested in contributing, please get in touch, create an [issue](https://github.com/IvanWilli/DemoKin/issues), or submit a pull request.
+We look forward to hearing from you!
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

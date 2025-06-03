@@ -1,0 +1,14 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+inst/doc
+diego.txt
+.m
+.mat
+.csv
+docs
+.Rdata
+.httr-oauth
+.DS_Store
+.quarto
